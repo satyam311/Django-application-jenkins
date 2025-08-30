@@ -1,4 +1,11 @@
 # Django-application-jenkins
+
+**PLAN:**
+1. Clone the repo from GITHUB
+2. Build using Docker
+3. Push the iage on Dockerhub
+4. Deploy on to the EC2 instance.
+
 Deployment of Django based application using Jenkins
 
 - **Parent Repo** : https://github.com/LondheShubham153/django-notes-app
