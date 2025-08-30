@@ -50,10 +50,79 @@ sudo apt-get install jenkins
   - Edit inbound rule in ec2 instance and add port 8080( jenkins) and 8000( for django application)
   
 
+- Write a sample jenkins pipeline and give a dry run :
+  ```
+    pipeline {
+      agent any
+  
+      stages {
+          stage('Code') {
+              steps {
+                  echo 'Step for coding'
+              }
+          }
+          stage('Build') {
+              steps {
+                  echo 'Steps for code build'
+              }
+          }
+          stage('Test') {
+              steps {
+                  echo 'Step for testing'
+              }}
+          stage('Deploy') {
+              steps {
+                  echo 'Step for deployment'
+              }
+          }
+          
+      }
+  }
+
+- Write code and build step
+  ```
+    pipeline {
+      agent any
+  
+      stages {
+          stage('Code') {
+              steps {
+                  echo 'Step for coding'
+                  git url: "https://github.com/satyam311/django-notes-app-jenkins-implemetation",  branch :"main"
+              }
+          }
+          stage('Build') {
+              steps {
+                  echo 'Steps for code build'
+                  sh "docker build -t notes-app:latest ."
+              }
+          }
+          stage('Test') {
+              steps {
+                  echo 'Step for testing'
+              }}
+          stage('Deploy') {
+              steps {
+                  echo 'Step for deployment'
+              }
+          }
+          
+      }
+  }
+
+
+  The Above will fail eventually due to 
+
+  ```    
+  + docker build -t notes-app:latest .
+  DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+                Install the buildx component to build images with BuildKit:
+                https://docs.docker.com/go/buildx/
+    permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post
+
+  ```
+    sudo usermod -aG docker jenkins
+    sudo systemctl restart jenkins
+    sudo chmod 666 /var/run/docker.sock
 
   
-
-  
-
-
-
